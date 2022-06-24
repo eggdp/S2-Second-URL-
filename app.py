@@ -1,6 +1,7 @@
 from flask import Flask, request ,render_template
 import face
-
+import nvapi
+from ast import keyword
 app = Flask(__name__)
 
 @app.route('/')
@@ -39,11 +40,12 @@ def newsapi():
         #뉴스 검색어 받기
         keyword=request.form["keyword"]
         #네이버 뉴스 정보 받아오는 코드 실행
-        
-        return f'''
-                유저가 검색한 내용<mark>{keyword}</mark>의
-                뉴스 정보가 나와야 한다.
-                '''
+        news=nvapi.news(keyword)
+        return news
+        # return f'''
+        #         유저가 검색한 내용<mark>{keyword}</mark>의
+        #         뉴스 정보가 나와야 한다.
+        #         '''
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0' ,debug=True)
